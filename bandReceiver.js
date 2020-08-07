@@ -1,7 +1,7 @@
 const {spawn} = require('child_process');
 
-function connectToBand(onBpm) {
-    const mqttReader = spawn('python3', ['./MiBand3/server.py']);
+function connectToBand(mac, onBpm) {
+    const mqttReader = spawn('python3', ['./MiBand3/server.py', mac]);
 
     mqttReader.stdout.on('data', data => {
         console.log(`stdout: ${data}`);

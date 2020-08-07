@@ -17,16 +17,18 @@ clientMqtt.on('connect', function () {
     });
 });
 
+settings.BANDS.forEach(bandMac => {
+    connectToBand(bandMac, (bpm) => {
+        if (bpm.bpm > 0) {
+            const json = JSON.stringify({
+                ...bpm,
+                timestamp: new Date().getTime()
+            });
+            console.log("[MAIN] Publishing message to MQTT",);
+            clientMqtt.publish(settings.TOPIC, json);
+        } else {
+            console.log(`[MAIN] Ignore message since mpb <= 0`);
+        }
+    });
 
-connectToBand((bpm) => {
-    if (bpm.bpm > 0) {
-        const json = JSON.stringify({
-            ...bpm,
-            timestamp: new Date().getTime()
-        });
-        console.log("[MAIN] Publishing message to MQTT", );
-        clientMqtt.publish(settings.TOPIC, json);
-    } else {
-        console.log(`[MAIN] Ignore message since mpb <= 0`);
-    }
 });

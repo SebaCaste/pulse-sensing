@@ -6,7 +6,7 @@ from constants import ALERT_TYPES
 import time
 import json
 
-MAC_ADDR = "CC:74:2F:87:DC:17"
+MAC_ADDR = sys.argv[1]
 
 print('Attempting to connect to ', MAC_ADDR)
 band = MiBand3(MAC_ADDR, debug=True)
