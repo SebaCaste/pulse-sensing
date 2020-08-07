@@ -26,7 +26,7 @@ heartBeatMessages = 0
 
 def on_bpm_reading(x):
     global heartBeatMessages, battery
-    print('Realtime-heart-BPM:' + json.dumps({"mac": MAC_ADDR, "bpm": x, "battery": battery}), flush=True)
+    print('Realtime-heart-BPM:' + json.dumps({"mac": MAC_ADDR, "bpm": x, "battery": battery["level"]}), flush=True)
     heartBeatMessages += 1
     if heartBeatMessages == 10:
         heartBeatMessages = 0

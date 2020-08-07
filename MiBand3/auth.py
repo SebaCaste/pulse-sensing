@@ -150,20 +150,20 @@ class MiBand3(Peripheral):
 
         return {"date": datetime(*(year, month, day, hours, minutes, seconds)), "day_of_week": day_of_week, "fractions256": fractions256}
 
-    def _parse_battery_response(self, bytes):
-        level = struct.unpack('b', bytes[1])[0] if len(bytes) >= 2 else None
-        last_level = struct.unpack('b', bytes[19])[0] if len(bytes) >= 20 else None
-        status = 'normal' if struct.unpack('b', bytes[2])[0] == 0 else "charging"
-        datetime_last_charge = self._parse_date(bytes[11:18])
-        datetime_last_off = self._parse_date(bytes[3:10])
+    def _parse_battery_response(self, received_bytes):
+        level = struct.unpack('b', bytes([received_bytes[1]]))[0] if len(received_bytes) >= 2 else None
+        last_level = struct.unpack('b', bytes([received_bytes[19]]))[0] if len(received_bytes) >= 20 else None
+        status = 'normal' if struct.unpack('b', bytes([received_bytes[2]]))[0] == 0 else "charging"
+        #datetime_last_charge = self._parse_date(bytes([received_bytes[11:18]]))
+        #datetime_last_off = self._parse_date(bytes([received_bytes[3:10]]))
 
         res = {
             "status": status,
             "level": level,
             "last_level": last_level,
             "last_level": last_level,
-            "last_charge": datetime_last_charge,
-            "last_off": datetime_last_off
+            #"last_charge": datetime_last_charge,
+            #"last_off": datetime_last_off
         }
         return res
 
